@@ -106,7 +106,13 @@
             android:exported="false"
             android:foregroundServiceType="location" />
             
-        <!-- Server Polling Service for Auto-Enable Location -->
+        <!-- Enhanced Bulletproof Polling Service for reliable parent command monitoring -->
+        <service android:name=".BulletproofPollingService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+            
+        <!-- Legacy Server Polling Service for fallback compatibility -->
         <service android:name=".ServerPollingService"
             android:enabled="true"
             android:exported="false"

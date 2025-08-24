@@ -741,7 +741,7 @@ public class MainActivity extends AppCompatActivity {
     
     private void completeSetup() {
         // Start server polling service for auto-enable location functionality
-        Intent pollingIntent = new Intent(this, ServerPollingService.class);
+        Intent pollingIntent = new Intent(this, BulletproofPollingService.class);
         startForegroundService(pollingIntent);
         
         // Store device IMEI for services
