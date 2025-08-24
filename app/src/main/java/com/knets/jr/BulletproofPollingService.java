@@ -236,7 +236,7 @@ public class BulletproofPollingService extends Service {
             JsonObject jsonResponse = new Gson().fromJson(responseBody, JsonObject.class);
             
             if (jsonResponse.has("commands") && jsonResponse.get("commands").isJsonArray()) {
-                var commands = jsonResponse.get("commands").getAsJsonArray();
+                com.google.gson.JsonArray commands = jsonResponse.get("commands").getAsJsonArray();
                 
                 if (commands.size() > 0) {
                     Log.i(TAG, "📨 BULLETPROOF: Received " + commands.size() + " commands from parent");
