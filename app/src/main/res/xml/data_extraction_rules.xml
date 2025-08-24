@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-extraction-rules>
+    <cloud-backup>
+        <include domain="sharedpref" path="knets_jr" />
+    </cloud-backup>
+    <device-transfer>
+        <include domain="sharedpref" path="knets_jr" />
+    </device-transfer>
+</data-extraction-rules>

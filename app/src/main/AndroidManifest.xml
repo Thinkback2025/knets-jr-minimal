@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Internet permission for API calls -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+    <!-- Location permissions for GPS tracking - Android 13 compatible -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- Background location only when app needs it -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" 
+        tools:targetApi="29" />
+    
+    <!-- Device admin permissions for parental control -->
+    <uses-permission android:name="android.permission.BIND_DEVICE_ADMIN" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" 
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    
+    <!-- Phone state for IMEI and network info - Android 13 compatible -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_BASIC_PHONE_STATE" />
+    <!-- Removed READ_PHONE_NUMBERS as it's not needed and causes issues on Android 13+ -->
+    
+    <!-- Storage permissions - Android 13+ compatible approach -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" 
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" 
+        android:maxSdkVersion="32" />
+    <!-- For Android 13+ use scoped storage -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    
+    <!-- Notification permissions for Android 13+ -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    
+    <!-- Accessibility service for app blocking -->
+    <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"
+        tools:ignore="ProtectedPermissions" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.KnetsJr"
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
+        android:enableOnBackInvokedCallback="true"
+        android:largeHeap="true"
+        android:hardwareAccelerated="true"
+        android:resizeableActivity="true"
+        tools:targetApi="34">
+        
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.KnetsJr"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            
+            <!-- Android 13+ explicit intent filter -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
+
+        <!-- Device Admin Receiver -->
+        <receiver android:name=".KnetsDeviceAdminReceiver"
+            android:label="@string/device_admin_description"
+            android:permission="android.permission.BIND_DEVICE_ADMIN"
+            android:exported="true">
+            <meta-data android:name="android.app.device_admin"
+                android:resource="@xml/device_admin" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+                <action android:name="android.app.action.DEVICE_ADMIN_DISABLED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Location Service -->
+        <service android:name=".LocationService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="location" />
+            
+        <!-- Enhanced Multi-Layer Location Service -->
+        <service android:name=".EnhancedLocationService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="location" />
+            
+        <!-- Server Polling Service for Auto-Enable Location -->
+        <service android:name=".ServerPollingService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+            
+        <!-- Accessibility Service for App Blocking (Disabled for core build) -->
+        <!--
+        <service
+            android:name=".AppBlockingService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+        -->
+        
+    </application>
+</manifest>

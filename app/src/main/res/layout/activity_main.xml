@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- App Logo and Title -->
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:src="@mipmap/ic_launcher"
+            android:contentDescription="Knets Jr Logo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="32dp"
+            android:text="Knets Jr"
+            android:textColor="@color/primary_color"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <!-- Progress Bar -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_marginBottom="24dp"
+            android:progress="16"
+            android:progressTint="@color/primary_color"
+            android:visibility="visible" />
+
+        <!-- Step Counter -->
+        <TextView
+            android:id="@+id/tvStep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:text="Step 1 of 6: Enter Parent Code"
+            android:textColor="@color/primary_color"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- Status Text -->
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="Enter your 10-digit parent code to connect to Knets"
+            android:textAlignment="center"
+            android:textColor="@color/text_color"
+            android:textSize="16sp" />
+
+        <!-- Code Input Section -->
+        <TextView
+            android:id="@+id/tvCodeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Parent Code:"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/etParentCode"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/edit_text_background"
+            android:hint="Enter 10-digit code"
+            android:inputType="textCapCharacters|textNoSuggestions"
+            android:maxLength="10"
+            android:padding="16dp"
+            android:textColor="@color/text_color"
+            android:textColorHint="@color/hint_color"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:digits="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ" />
+
+        <!-- Device IMEI Input Section (Hidden initially) -->
+        <TextView
+            android:id="@+id/tvImeiLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Device IMEI:"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvImeiInstructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="📱 To find your IMEI number, dial *#06# on your phone\n💡 Enter the 15-digit number displayed"
+            android:textColor="@color/text_color"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/etDeviceImei"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/edit_text_background"
+            android:hint="Enter 15-digit IMEI"
+            android:inputType="number"
+            android:maxLength="15"
+            android:padding="16dp"
+            android:textColor="@color/text_color"
+            android:textColorHint="@color/hint_color"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <!-- Secret Code Input Section (Hidden initially) -->
+        <TextView
+            android:id="@+id/tvSecretCodeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Secret Code:"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/etSecretCode"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/edit_text_background"
+            android:hint="Enter 4-digit secret code"
+            android:inputType="numberPassword"
+            android:maxLength="4"
+            android:padding="16dp"
+            android:textColor="@color/text_color"
+            android:textColorHint="@color/hint_color"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <!-- Action Buttons -->
+        <Button
+            android:id="@+id/btnConnect"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/button_primary"
+            android:text="Save Code"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:enabled="false"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/btnEnableDeviceAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/button_primary"
+            android:text="Enable Device Admin"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnEnableLocation"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/button_primary"
+            android:text="Enable Location Services"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <!-- Device Info -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Device Information:"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvDeviceInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/card_background"
+            android:padding="16dp"
+            android:text="Loading device info..."
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
+
+        <!-- Security Notice -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_background"
+            android:padding="16dp"
+            android:text="🔒 Your privacy is protected. Knets Jr only shares location and device status with your parent's account."
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:textAlignment="center" />
+
+    </LinearLayout>
+</ScrollView>

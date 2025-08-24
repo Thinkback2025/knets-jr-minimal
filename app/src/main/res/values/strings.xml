@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Knets Jr</string>
+    <string name="device_admin_description">Knets Jr Parental Control</string>
+    <string name="device_admin_explanation">Allow Knets Jr to manage device settings for parental controls</string>
+    <string name="accessibility_service_description">Knets Jr App Blocking</string>
+    <string name="accessibility_service_summary">Allows Knets Jr to block apps during restricted hours</string>
+</resources>
