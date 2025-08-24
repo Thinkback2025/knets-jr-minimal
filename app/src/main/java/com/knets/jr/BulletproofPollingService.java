@@ -186,7 +186,7 @@ public class BulletproofPollingService extends Service {
     }
     
     private void checkForParentCommands() {
-        String serverUrl = getServerBaseUrl() + "/api/knets-jr/check-commands/" + deviceImei;
+        String serverUrl = getServerBaseUrl() + "/api/knets-jr/poll-command?deviceImei=" + deviceImei;
         
         Request request = new Request.Builder()
                 .url(serverUrl)
@@ -462,6 +462,6 @@ public class BulletproofPollingService extends Service {
     
     private String getServerBaseUrl() {
         // Use production URL for Knets Jr
-        return "https://workspace--thinkbacktechno.replit.app";
+        return "https://knets-thinkbacktechno.replit.app";
     }
 }

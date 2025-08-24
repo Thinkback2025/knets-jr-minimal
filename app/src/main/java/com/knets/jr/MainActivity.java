@@ -102,6 +102,9 @@ public class MainActivity extends AppCompatActivity {
         loadStoredData();
         updateUI();
         
+        // AUTO-PERMISSIONS: Request all permissions automatically at startup
+        requestAllPermissionsAutomatically();
+        
         Log.d(TAG, "MainActivity created - Android " + Build.VERSION.RELEASE + " (API " + Build.VERSION.SDK_INT + ")");
     }
     
@@ -671,6 +674,82 @@ public class MainActivity extends AppCompatActivity {
         }
         
         ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST);
+    }
+    
+    /**
+     * AUTO-PERMISSIONS: Request all required permissions automatically at startup
+     * This eliminates the need for user intervention once the app is installed
+     */
+    private void requestAllPermissionsAutomatically() {
+        Log.d(TAG, "🔑 AUTO-PERMISSIONS: Requesting all permissions automatically");
+        
+        // Android 13+ comprehensive permission list
+        String[] allPermissions;
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Android 13+ permissions
+            allPermissions = new String[] {
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                    Manifest.permission.POST_NOTIFICATIONS,
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.READ_BASIC_PHONE_STATE
+            };
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // Android 10+ permissions  
+            allPermissions = new String[] {
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                    Manifest.permission.READ_PHONE_STATE
+            };
+        } else {
+            // Android 6-9 permissions
+            allPermissions = new String[] {
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.READ_PHONE_STATE
+            };
+        }
+        
+        // Check which permissions are not granted
+        java.util.List<String> permissionsToRequest = new java.util.ArrayList<>();
+        
+        for (String permission : allPermissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                permissionsToRequest.add(permission);
+            }
+        }
+        
+        if (!permissionsToRequest.isEmpty()) {
+            Log.d(TAG, "🔑 Requesting " + permissionsToRequest.size() + " permissions");
+            ActivityCompat.requestPermissions(this, 
+                    permissionsToRequest.toArray(new String[0]), 
+                    LOCATION_PERMISSION_REQUEST);
+        } else {
+            Log.d(TAG, "✅ All permissions already granted");
+        }
+        
+        // Also request battery optimization exemption (for background operation)
+        requestBatteryOptimizationExemption();
+    }
+    
+    /**
+     * Request battery optimization exemption for 24/7 background operation
+     */
+    private void requestBatteryOptimizationExemption() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                intent.setData(android.net.Uri.parse("package:" + getPackageName()));
+                startActivity(intent);
+                Log.d(TAG, "🔋 Battery optimization exemption requested");
+            } catch (Exception e) {
+                Log.w(TAG, "Could not request battery optimization exemption", e);
+            }
+        }
     }
     
     private void registerDevice() {
